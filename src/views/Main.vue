@@ -29,7 +29,7 @@
             inactiveIcon: require('../assets/home.png'),
           },
           {
-            title: '菜单',
+            title: '改成',
             routeName: 'Menu',
             activeIcon: require('../assets/menu_active.png'),
             inactiveIcon: require('../assets/menu.png'),
