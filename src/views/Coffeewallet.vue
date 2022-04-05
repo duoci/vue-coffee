@@ -9,18 +9,18 @@
         <div class="item-right">
           <div class="right-text">全国通用券<van-icon name="info-o" @click="guize" /></div>
           <div>
-            <van-stepper v-model="item.count" theme="round" button-size="22" disable-input min="0" @change="countChange(item.price, item.count)" />
+            <van-stepper v-model="item.count" theme="round" button-size="22" disable-input min="0" @change="countChange(item)" />
           </div>
         </div>
       </div>
-      <div class="give" v-if="isEait">
-        <div class="wallet-item">
+      <div class="give" v-if="conpouData.length">
+        <div class="wallet-item" v-for="(v, i) in conpouData" :key="i">
           <div class="item-left" style="background-color: #0122a8; color: #fff">
-            <div class="price"><span class="price-i">￥</span>{{ isprice }}</div>
+            <div class="price"><span class="price-i">￥</span>{{ v.price }}</div>
           </div>
           <div class="item-right">
             <div class="right-text">全国通用券<van-icon name="info-o" /></div>
-            <div>x{{ isnum }}</div>
+            <div>x{{ v.count }}</div>
           </div>
         </div>
       </div>
@@ -44,9 +44,9 @@
     },
     data() {
       return {
+        zong: 0,
         value: '',
         price: 0,
-        text: '购买以上商品券享充4送3,不同商品券可组合购买',
         isEait: false,
         isprice: '',
         isnum: 0,
@@ -64,6 +64,8 @@
             count: 0,
           },
         ],
+        conpou: [],
+        conpouData: [],
       };
     },
     computed: {
@@ -76,6 +78,23 @@
         });
 
         return total * 100;
+      },
+      text() {
+        const { zong } = this;
+        if (zong < 4) {
+          const daoZong = 4 - zong;
+          return `在充${daoZong}张享充4赠3`;
+        }
+
+        if (zong >= 4 && 10 >= zong) {
+          const daoZong = 10 - zong;
+          return `${'已享充4赠3' + '  在充 '}${daoZong} 张享充10赠8,更划算`;
+        }
+        if (zong >= 10 && 14 >= zong) {
+          const daoZong = 14 - zong;
+          return `${'已享充10赠8' + '  在充 '}${daoZong} 张享充14赠11,更划算`;
+        }
+        return '购买以上商品券享充4送3,不同商品券可组合购买';
       },
     },
     methods: {
@@ -100,43 +119,33 @@
           this.$toast('您没有选择券');
         }
       },
-      countChange(item, count) {
+      countChange(item) {
         let zong = 0;
-        const arr = [];
-        let j = 0;
         this.quanData.forEach(v => {
           zong += v.count;
-          arr.push(v.count);
+          console.log(this.quanData, v.count, 'count');
+          this.zong = zong;
         });
-        const max = Math.max.apply(null, arr);
-
-        console.log(max);
-        if (zong <= 4) {
-          const daoZong = 4 - zong;
-          this.text = `在充${daoZong}张享充4赠3`;
-        }
-
-        if (zong >= 4 && 10 >= zong) {
-          const daoZong = 10 - zong;
-          this.text = `${'已享充4赠3' + '  在充 '}${daoZong} 张享充10赠8,更划算`;
-        }
-        if (zong >= 10 && 14 >= zong) {
-          const daoZong = 14 - zong;
-          this.text = `${'已享充10赠8' + '  在充 '}${daoZong} 张享充14赠11,更划算`;
-        }
-        console.log(arr);
-        for (let i = 0; i < arr.length; i += 1) {
-          console.log(i);
-          if (arr[i] === max) {
-            j = i;
-            if (zong === 4) {
-              console.log('进来了');
-              this.isEait = true;
-              this.isnum = 3;
-              this.isprice = this.quanData[j].price;
-            }
-
-            return;
+        const conpouIndex = this.quanData.findIndex(v => {
+          return v.price === item.price;
+        });
+        const obj = JSON.parse(JSON.stringify(this.quanData[conpouIndex]));
+        obj.count = 1;
+        this.conpou.push(obj);
+        const conpou = JSON.parse(JSON.stringify(this.conpou));
+        console.log(this.zong, zong);
+        if (this.zong === 4 || this.zong === 10) {
+          this.conpouData = [];
+          const forNum = this.zong < 10 ? 3 : 8;
+          for (let i = 0; i < forNum; i += 1) {
+            if (i === forNum) return;
+            const num = Math.abs(Math.round(Math.random() * conpou.length - 1));
+            if (this.conpouData.indexOf(conpou[num]) > -1) {
+              const index = this.conpouData.findIndex(v => {
+                return v === conpou[num];
+              });
+              this.conpouData[index].count += 1;
+            } else this.conpouData.push(conpou[num]);
           }
         }
       },
@@ -148,8 +157,9 @@
   .coffee-wallet {
     .wallet-conter {
       margin-top: 46px;
-      width: calc(100%-20px);
-      padding: 10px;
+      padding: 10px 10px 80px 10px;
+      min-height: calc(100vh - 46px);
+      box-sizing: border-box;
       .wallet-item {
         width: 100%;
         height: 80px;

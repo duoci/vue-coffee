@@ -60,15 +60,13 @@
         }
       },
 
-      // 编辑地址
+      // 编辑地址函数
       async editAddress(content) {
         const addressInfo = {
           ...content,
           aid: this.aid,
         };
-
         delete addressInfo.country;
-
         // 检测用户是否修改的地址数据
         let isModify = false;
         for (const key in addressInfo) {
@@ -76,12 +74,10 @@
             isModify = true;
           }
         }
-
         if (!isModify) {
           this.$toast('尚未修改地址');
           return;
         }
-
         addressInfo.isDefault = Number(addressInfo.isDefault);
         const res = await this.post('editAddress', addressInfo);
         if (res.code === 30000) {

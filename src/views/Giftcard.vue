@@ -40,6 +40,7 @@
     name: 'Giftcard',
     data() {
       return {
+        // 礼品卡数据
         hotData: [
           {
             hotimg: require('../assets/001.jpg'),
@@ -95,6 +96,7 @@
           {
             hotimg: require('../assets/018.jpg'),
           },
+
           {
             hotimg: require('../assets/019.jpg'),
           },

@@ -103,13 +103,13 @@
       empty() {
         this.nickname = '';
       },
+      // 男女选项函数
       onSelect(item) {
-        // 默认情况下点击选项时不会自动收起
-        // 可以通过 close-on-click-action 属性开启自动收起
         this.show = false;
         this.sex = item.name;
         localStorage.setItem('sex', item.name);
       },
+      // 修改简介函数
       async amendDesc(message) {
         const res = await this.post('updateDesc', { desc: message });
         const { result, code } = res;
@@ -122,6 +122,7 @@
           (this.message = res.desc), (this.userData.desc = res.desc), (this.descShow = false);
         }
       },
+      // 修改昵称函数
       async changenick(nickname) {
         console.log(nickname);
         if (nickname === '') return this.$toast('不能为空');
@@ -141,10 +142,11 @@
       descShowPopup() {
         this.descShow = true;
       },
+      // 获取个人数据
       async getUserDate() {
         const res = await this.get('findAccountInfo', {});
         const { result, code } = res;
-        const [aa] = result
+        const [aa] = result;
         if (code === 'B001') {
           this.userData = aa;
           if (this.userData.desc === '') {
@@ -153,6 +155,7 @@
           this.nickname = this.userData.nickName;
         }
       },
+      // 更换头像函数
       async upload(file) {
         console.log('file ==> ', file);
         // eslint-disable-next-line prefer-destructuring
