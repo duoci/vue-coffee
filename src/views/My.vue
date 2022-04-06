@@ -85,7 +85,7 @@
         const serverBase64Img = file.content.replace(/data:image\/[A-Za-z]+;base64,/, '');
         const res = await this.post('updateUserBg', { imgType, serverBase64Img });
         const { result } = res;
-        console.log('result', res);
+        this.$toast(res.msg);
         if (res.code === 'I001' && result[0] === 1) this.userInfo.userBg = res.userBg;
       },
 

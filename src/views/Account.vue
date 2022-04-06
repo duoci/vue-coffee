@@ -113,7 +113,8 @@
       async amendDesc(message) {
         const res = await this.post('updateDesc', { desc: message });
         const { result, code } = res;
-        console.log(res);
+        // console.log(res);
+        this.$toast(res.msg);
         if (res.code === 'D001') {
           if (res.desc === this.userData.desc) {
             this.$toast('新旧简介相同');
@@ -128,6 +129,7 @@
         if (nickname === '') return this.$toast('不能为空');
         const res = await this.post('updateNickName', { nickName: nickname });
         // const { result,code } = res;
+        this.$toast(res.msg);
         if (res.code === 'C001') {
           if (res.nickName === this.userData.nickName) {
             this.$toast('新旧昵称相同');
@@ -147,6 +149,7 @@
         const res = await this.get('findAccountInfo', {});
         const { result, code } = res;
         const [aa] = result;
+        this.$toast(res.msg);
         if (code === 'B001') {
           this.userData = aa;
           if (this.userData.desc === '') {
@@ -157,7 +160,7 @@
       },
       // 更换头像函数
       async upload(file) {
-        console.log('file ==> ', file);
+        // console.log('file ==> ', file);
         // eslint-disable-next-line prefer-destructuring
         const imgType = file.file.type.split(/\//)[1];
         const serverBase64Img = file.content.replace(/data:image\/[A-Za-z]+;base64,/, '');
@@ -165,6 +168,8 @@
           imgType,
           serverBase64Img,
         });
+        // console.log(res.msg);
+        this.$toast(res.msg);
         if (res.code === 'H001' && res.result[0] === 1) this.userData.userImg = res.userImg;
       },
     },

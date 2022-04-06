@@ -48,8 +48,8 @@
 
       // 删除商品
       async removeProduct(pid, index) {
-        console.log('删除收藏商品');
-        console.log(pid, index);
+        // console.log('删除收藏商品');
+        // console.log(pid, index);
         const res = await this.post('notlike', { pid });
         if (res.code === 900 && res.result === 1) {
           this.$toast('删除成功');

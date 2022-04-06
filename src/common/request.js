@@ -112,7 +112,6 @@ export const post = (url, parameterObj = {}) => {
         }).then((res) => {
             resolve(res.data)
             console.log(res)
-
             if (res.code === 700) {
                 Toast(res.data.msg);
                 router.push({ name: 'Login' });
