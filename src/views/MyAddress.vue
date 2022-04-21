@@ -32,13 +32,11 @@
       async getAddressData() {
         const res = await this.get('findAddress', {});
         const { result, code } = res;
-        // console.log(res)
         if (code === 20000) {
           result.forEach(item => {
             item.address = `${item.province}${item.city}${item.county}${item.addressDetail}`;
           });
           this.list = result;
-          // console.log(this.list)
         }
       },
 
@@ -49,7 +47,6 @@
 
       // 编辑地址
       editAddress(item) {
-        // console.log("item ==> ", item);
         this.$router.push({ name: 'Address', query: { aid: item.aid } });
       },
     },

@@ -119,14 +119,12 @@
             });
             orderData.push(currentOrder);
           });
-          console.log('orderData ==> ', orderData);
           this.orderData = orderData;
         }
       },
 
       // 切换订单状态
       toggleTab() {
-        console.log('this.active ==> ', this.active);
         this.getOrderData();
       },
 
@@ -142,15 +140,12 @@
               if (this.active === 0) {
                 item.status = 2;
                 huabng;
-                // console.log('item ==> ', item);
               } else if (item.status === 1) {
                 this.orderData.splice(index, 1);
               }
             }
           })
-          .catch(err => {
-            console.log('err ==> ', err);
-          });
+          .catch(err => {});
       },
 
       // 删除订单
@@ -160,13 +155,10 @@
             message: '是否确定删除该订单？',
           })
           .then(async () => {
-            // console.log('删除');
             const res = await this.post('removeOrder', { oid });
             if (res.code === 90000) this.orderData.splice(index, 1);
           })
-          .catch(err => {
-            console.log('err ==> ', err);
-          });
+          .catch(err => {});
       },
     },
   };

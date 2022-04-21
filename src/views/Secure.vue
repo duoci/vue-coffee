@@ -69,9 +69,11 @@
       // 退出登陆
       async logout() {
         const res = await this.post('logout', {});
-        if (res.code === 'F001') setTimeout(() => {
+        if (res.code === 'F001') {
+          setTimeout(() => {
             this.$router.push({ name: 'Home' });
           }, 1000);
+        }
       },
       // 注销账号
       closeAccount() {
@@ -84,9 +86,7 @@
             const res = await this.post('destroyAccount', {});
             if (res.code === 'G001') this.$router.push({ name: 'Login' });
           })
-          .catch(err => {
-            console.log(err);
-          });
+          .catch(err => {});
       },
       pswPopup() {
         this.pwsshow = true;
@@ -105,7 +105,6 @@
         }
 
         const res = await this.post('updatePassword', { password: newPassword, oldPassword });
-        console.log(res);
         if (res.code === 'E001') {
           this.pwsshow = false;
           this.oldPassword = '';

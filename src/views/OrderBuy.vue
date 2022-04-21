@@ -104,7 +104,6 @@
 
       // 选择地址
       select(item) {
-        console.log('item ==> ', item);
         for (const key in this.userSelectAddress) {
           this.userSelectAddress[key] = item[key];
         }

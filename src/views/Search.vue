@@ -49,12 +49,10 @@
     },
     methods: {
       viewDetail(pid) {
-        // console.log("pid ==> ", pid);
         this.$router.push({ name: 'Detail', params: { pid } });
       },
       async onSearch(value) {
         const res = await this.get('search', { name: value });
-        // console.log(res)
         const { result, code } = res;
         if (code === 'Q001') {
           this.$toast(res.msg);

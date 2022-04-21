@@ -102,10 +102,8 @@
         const { disData } = this;
         const [disa] = disData;
         this.disa = disa;
-        bu;
       },
       disclick(index) {
-        // console.log(index,name)
         this.disa = this.disData[index];
       },
     },

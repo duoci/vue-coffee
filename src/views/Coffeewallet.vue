@@ -123,7 +123,6 @@
         let zong = 0;
         this.quanData.forEach(v => {
           zong += v.count;
-          console.log(this.quanData, v.count, 'count');
           this.zong = zong;
         });
         const conpouIndex = this.quanData.findIndex(v => {
@@ -133,7 +132,6 @@
         obj.count = 1;
         this.conpou.push(obj);
         const conpou = JSON.parse(JSON.stringify(this.conpou));
-        console.log(this.zong, zong);
         if (this.zong === 4 || this.zong === 10) {
           this.conpouData = [];
           const forNum = this.zong < 10 ? 3 : 8;

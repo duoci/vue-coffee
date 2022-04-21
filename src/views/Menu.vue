@@ -49,7 +49,6 @@
 
     methods: {
       searchProduct(value) {
-        console.log(value);
         this.$router.push({ name: 'Search', params: { value } });
       },
       // 获取商品类型
@@ -65,7 +64,6 @@
 
       // 根据商品类型获取商品数据
       async getProductByType(type) {
-        // console.log("type ==> ", type);
         const res = await this.get('typeProducts', { key: 'type', value: type });
         const { result, code } = res;
         if (code === 500) this.productData = result;

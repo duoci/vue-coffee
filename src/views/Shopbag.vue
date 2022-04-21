@@ -5,7 +5,7 @@
 
     <div v-if="isLogin">
       <div class="shopbag-list">
-        <div class="shopbag-list-item" v-for="(item) in shopbagData" :key="item.sid">
+        <div class="shopbag-list-item" v-for="item in shopbagData" :key="item.sid">
           <van-swipe-cell>
             <div>
               <ShopbagItem :shopbag-item-data="item" @select-one="selectOne" @update-count="updateCount(item.sid, item.count)" />
@@ -85,7 +85,6 @@
     methods: {
       // 编辑
       edit() {
-        console.log('编辑');
         this.isEdit = !this.isEdit;
         this.text = this.isEdit ? '完成' : '编辑';
       },
@@ -99,7 +98,6 @@
       async getShopbagProduct() {
         const res = await this.get('findAllShopcart', {});
         const { result, code } = res;
-        console.log(result, code);
         if (code === 700) {
           this.isLogin = false;
           this.text = '';
@@ -118,14 +116,13 @@
 
       // 全选
       allSelect() {
-        console.log('cc');
         this.shopbagData.forEach(item => {
           item.isCheck = this.isAllSelect;
         });
       },
 
       selectOne() {
-        for (let i = 0; i < this.shopbagData.length; i += 1 ) {
+        for (let i = 0; i < this.shopbagData.length; i += 1) {
           if (!this.shopbagData[i].isCheck) {
             this.isAllSelect = false;
             return;
@@ -169,7 +166,6 @@
             sids.push(item.sid);
           }
         });
-        // console.log('sids ==> ', sids);
         this.removeShopbag(sids);
       },
 
@@ -181,7 +177,6 @@
             sids.push(item.sid);
           }
         });
-        console.log('sids ==> ', sids);
         if (sids.length === 0) {
           this.$toast('请选择下单的商品');
           return;

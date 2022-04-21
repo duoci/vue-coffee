@@ -72,7 +72,6 @@
 
     created() {
       this.pid = this.$route.params.pid;
-      console.log(this.pid);
       this.getProductDetailByPid(this.pid);
       this.findCurrentLike();
       this.getShopbagCount();
@@ -83,7 +82,6 @@
       async getProductDetailByPid(pid) {
         const res = await this.get('productDetail', { pid });
         const { result, code } = res;
-        // console.log(res);
         const [data] = result;
         if (code === 600) {
           data.desc = data.desc.split(/\n/);
@@ -109,8 +107,6 @@
             rulesData.push(rulesItem);
           });
 
-          console.log('rulesData ==> ', rulesData);
-
           data.rulesData = rulesData;
 
           // 先处理数据, 再赋值给data数据, 否则如果为对象添加新的属性时， vue无法监听新的属性变化
@@ -121,7 +117,6 @@
       // 选择规格
       selectRule(item, index) {
         if (item.activeIndex === index) {
-          console.log('已经处于激活状态');
           return;
         }
         item.activeIndex = index;
@@ -131,7 +126,6 @@
       async likeProduct() {
         const url = this.isLike ? '/notlike' : '/like';
         const res = await this.post(url, { pid: this.pid });
-        console.log(res);
         if (res.code === 800) {
           this.isLike = true;
         } else if (res.code === 900 && res.result === 1) {
@@ -162,7 +156,6 @@
         // 获取商品的pid
         // 获取商品数量
         // 获取商品的规格
-        // console.log('this.productDetail ==> ', this.productDetail);
         const rule = [];
         const res = await this.post('addShopcart', { pid: this.pid, count: this.count, rule: rule.join('/') });
         if (res.code === 3000) {

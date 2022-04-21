@@ -152,6 +152,7 @@
       // 注册
       async register() {
         const res = await this.post('register', { ...this.registerUserInfo });
+        this.$toast(res.msg);
         if (res.code === 100) {
           this.show = false;
           // 清除用户注册信息
@@ -164,7 +165,7 @@
       // 登录
       async login() {
         const res = await this.post('login', { ...this.loginUserInfo });
-        // console.log(res);
+        this.$toast(res.msg);
         if (res.code === 200) {
           localStorage.setItem('token', res.token);
           setTimeout(() => {

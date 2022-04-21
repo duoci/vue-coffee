@@ -2,9 +2,6 @@
   <div class="home-page">
     <div class="bannner-box">
       <div class="bannner-boxding">
-        <div class="saoBox">
-          <img class="saoImg" src="../assets/扫一扫.png" alt="" />
-        </div>
         <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" height="260px">
           <van-swipe-item v-for="(item, index) in bannerData" :key="index">
             <div @click="viewDetail(item.pid)">
